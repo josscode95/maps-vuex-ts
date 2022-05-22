@@ -1,28 +1,32 @@
+<script lang="ts" src="./SearchResults.ts" />
+
 <template>
-  <ul class="list-group mt-3">
-    <li class="list-group-item list-group-item-action">
-      <h5>Nombre del lugar</h5>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil, suscipit!</p>
+  <div
+    v-if="isLoadingPlaces"
+    class="alert alert-primary text-center"
+  >
+    <h5>Cargando</h5>
+    <span>Espere por favor...</span>
+  </div>
+  <ul 
+    v-else-if="places.length > 0"
+    class="list-group mt-3"
+  >
+    <li 
+      v-for="place in places"
+      :key="place.id"
+      :class="{'active': place.id === activePlace}"
+      class="list-group-item list-group-item-action"
+      @click="onPlaceClicked( place )"
+    >
+      <h5>{{ place.text }}</h5>
+      <p>{{ place.place_name }}</p>
       <div align="right">
-        <button class="btn btn-outline-primary">
-          Direcciones
-        </button>
-      </div>
-    </li>
-    <li class="list-group-item list-group-item-action">
-      <h5>Nombre del lugar</h5>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil, suscipit!</p>
-      <div align="right">
-        <button class="btn btn-outline-primary">
-          Direcciones
-        </button>
-      </div>
-    </li>
-    <li class="list-group-item list-group-item-action">
-      <h5>Nombre del lugar</h5>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil, suscipit!</p>
-      <div align="right">
-        <button class="btn btn-outline-primary">
+        <button 
+          class="btn btn-outline-primary btn-sm"
+          :class="place.id === activePlace ? 'btn-outline-light' : 'btn-outline-primary'"
+          @click.self="getRouteDirections(place)"
+        >
           Direcciones
         </button>
       </div>
@@ -33,5 +37,13 @@
 <style scoped>
   li{
     cursor: pointer;
+    padding: 5px 15px 5px 15px;
+  }
+  h5{
+    font-size: 14px;
+  }
+  p{
+    font-size: 10px;
+    margin-bottom: 10px;
   }
 </style>

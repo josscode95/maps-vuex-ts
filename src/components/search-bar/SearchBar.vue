@@ -6,8 +6,9 @@
       class="form-control"
       type="text"
       placeholder="Buscar lugares..."
+      v-model="searchTerm"
     />
-    
+    <search-results />
   </div>
 </template>
 
@@ -23,5 +24,7 @@
     border-radius: 10px;
     overflow: hidden;
     padding: 5px;
+    overflow-y: scroll;
+    scrollbar-width: none;
   }
 </style>
